@@ -1,5 +1,3 @@
-# SwiftRecipe
-
 ![image](https://github.com/emtaylor1993/School-Projects/assets/93065901/2a771cb7-46e5-4255-b806-d1cbf6c3c2cc)
 
 # Team Members:
