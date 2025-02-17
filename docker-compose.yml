@@ -1,0 +1,7 @@
+version: '3'
+services:
+  swift-recipe:
+    image: swift-recipe
+    container_name: swift-recipe
+    ports:
+      - "8080:8080"
