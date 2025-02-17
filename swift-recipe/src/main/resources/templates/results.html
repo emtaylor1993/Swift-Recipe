@@ -1,0 +1,65 @@
+<!--
+ * SWIFTRECIPE RECIPE RESULTS VIEW
+ *
+ * @author Sade Jn Baptiste
+ * @author Lakshmi Kotikalapudi
+ * @author Andy Nguyen
+ * @author Shivani Samarla
+ * @author Emmanuel Taylor
+ *
+ * @description
+ *     View for Results Screen
+-->
+
+<html>
+    <head>
+        <title>SwiftRecipe - Results</title>
+        <link th:href="@{/stylesheet.css}" rel="stylesheet" type="text/css">
+        <script th:src="@{/javascript.js}" async></script>
+    </head>
+    <body>
+        <div class="top-bar">
+            <div class="search-bar">
+                <input id="searchInput" type="text" placeholder="Search...">
+                <button id="searchButton" type="button" onclick="search()" disabled>Search</button>
+            </div>
+            <div class="tabs">
+                <a th:href="@{/}">Home</a>
+                <a th:href="@{/categories}">Categories</a>
+                <a th:href="@{/saved}">Saved</a>
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+        <br /><br />
+        <center><h1>Recipe Search Results for Query: <text th:text="${query}" style="color: #3366FF;"></text></h1></center>
+        <div class="wrapper" style="display: flex;">
+            <div class="row" id="row">
+                <div class="card" id="card" th:each="result: ${results}" style="display: none;">
+                    <div class="image" id="image">
+                        <img th:src="${result.image}"  width="270" height="220">
+                    </div>
+                    <span class="productname" th:text="${result.recipeName}"></span>
+                    <span class="rating">
+                        <i th:data-star="${result.rating}"></i>
+                        <i th:text="${result.rating}" style="font-size: 24; font-weight: bold; float: right; padding: 18px 10px 0 10px;"></i>
+                    </span>
+                    <span class="description" th:text="${result.description}"></span>
+                    <button type="button" th:onclick="|window.location.href='/recipeinfo/?recipeId=${result.recipeId}'|">View Recipe</button>
+                </div>
+            </div>
+        </div>
+        <div class="pagination" id="pagination"></div>
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "7oRHN_hpWsZT77dqXMKDO",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src="https://www.chatbase.co/embed.min.js"
+            chatbotId="7oRHN_hpWsZT77dqXMKDO"
+            domain="www.chatbase.co"
+            defer>
+        </script>
+    </body>
+</html>

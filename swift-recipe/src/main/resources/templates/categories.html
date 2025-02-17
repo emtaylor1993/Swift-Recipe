@@ -1,0 +1,98 @@
+<!--
+ * SWIFTRECIPE RECIPE CATEGORY VIEW
+ *
+ * @author Sade Jn Baptiste
+ * @author Lakshmi Kotikalapudi
+ * @author Andy Nguyen
+ * @author Shivani Samarla
+ * @author Emmanuel Taylor
+ *
+ * @description
+ *     View for Categories Screen
+-->
+
+<html>
+    <head>
+        <title>SwiftRecipe - Categories</title>
+        <link th:href="@{/stylesheet.css}" rel="stylesheet" type="text/css">
+        <script th:src="@{/javascript.js}" async></script>
+    </head>
+    <body>
+        <div class="top-bar">
+            <div class="search-bar">
+                <input id="searchInput" type="text" placeholder="Search...">
+                <button id="searchButton" type="button" onclick="search()" disabled>Search</button>
+            </div>
+            <div class="tabs">
+                <a th:href="@{/}">Home</a>
+                <a th:href="@{/categories}" class="active">Categories</a>
+                <a th:href="@{/saved}">Saved</a>
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+        <br /><br />
+        <center><h1>Recipe Filter Categories</h1></center>
+        <div class="wrapper" style="display: flex;">
+            <div class="row" id="row">
+                <button type="button" class="blue-button" th:onclick="|window.location.href='/results/?query=easy'|">
+                    Beginner
+                </button>
+                <button type="button" class="blue-button" th:onclick="|window.location.href='/results/?query=medium'|">
+                    Intermediate
+                </button>
+                <button type="button" class="blue-button" th:onclick="|window.location.href='/results/?query=hard'|">
+                    Expert
+                </button>
+                <button type="button" class="green-button" th:onclick="|window.location.href='/results/?query=breakfast'|">
+                    Breakfast
+                </button>
+                <button type="button" class="green-button" th:onclick="|window.location.href='/results/?query=lunch'|">
+                    Lunch
+                </button>
+                <button type="button" class="green-button" th:onclick="|window.location.href='/results/?query=dinner'|">
+                    Dinner
+                </button>
+                <button type="button" class="green-button" th:onclick="|window.location.href='/results/?query=side'|">
+                    Side Dishes
+                </button>
+                <button type="button" class="green-button" th:onclick="|window.location.href='/results/?query=dessert'|">
+                    Desserts
+                </button>
+                <button type="button" class="green-button" th:onclick="|window.location.href='/results/?query=appetizer'|">
+                    Appetizers
+                </button>
+                <button type="button" class="green-button" th:onclick="|window.location.href='/results/?query=snack'|">
+                    Snacks
+                </button>
+                <button type="button" class="green-button" th:onclick="|window.location.href='/results/?query=beverage'|">
+                    Beverages
+                </button>
+                <button type="button" class="red-button" th:onclick="|window.location.href='/results/?query=hispanic'|">
+                    American and Hispanic
+                </button>
+                <button type="button" class="red-button" th:onclick="|window.location.href='/results/?query=european'|">
+                    European
+                </button>
+                <button type="button" class="red-button" th:onclick="|window.location.href='/results/?query=asian'|">
+                    Asian
+                </button>
+                <button type="button" class="red-button" th:onclick="|window.location.href='/results/?query=middleeast'|">
+                    Middle Eastern and South Asian
+                </button>
+            </div>
+        </div>
+        <div class="pagination" id="pagination"></div>
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "7oRHN_hpWsZT77dqXMKDO",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src="https://www.chatbase.co/embed.min.js"
+            chatbotId="7oRHN_hpWsZT77dqXMKDO"
+            domain="www.chatbase.co"
+            defer>
+        </script>
+    </body>
+</html>

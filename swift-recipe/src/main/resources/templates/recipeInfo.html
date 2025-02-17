@@ -1,0 +1,99 @@
+<!--
+ * SWIFTRECIPE RECIPE INFORMATION VIEW
+ *
+ * @author Sade Jn Baptiste
+ * @author Lakshmi Kotikalapudi
+ * @author Andy Nguyen
+ * @author Shivani Samarla
+ * @author Emmanuel Taylor
+ *
+ * @description
+ *     View for Recipe Information Screen
+-->
+
+<html>
+    <head>
+        <title>SwiftRecipe - Recipe Details</title>
+        <link th:href="@{/stylesheet.css}" rel="stylesheet" type="text/css">
+        <script th:src="@{/javascript.js}" async></script>
+    </head>
+    <body>
+        <div class="top-bar">
+            <div class="search-bar">
+                <input id="searchInput" type="text" placeholder="Search...">
+                <button id="searchButton" type="button" onclick="search()" disabled>Search</button>
+            </div>
+            <div class="tabs">
+                <a th:href="@{/}">Home</a>
+                <a th:href="@{/categories}">Categories</a>
+                <a th:href="@{/saved}">Saved</a>
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+        <br /><br />
+        <center><h1>Recipe Information</h1></center>
+        <br /><br />
+        <div class="container">
+            <div class="column">
+                <center>
+                    <h2 th:Text="${recipe.recipeName}"></h2>
+                    <div class="image" id="image">
+                        <img th:src="${recipe.image}"  width="405" height="330" style="box-shadow: 3px 3px 3px gray;">
+                    </div>
+                    <span class="rating">
+                        <i class="fa fa-star" th:data-star="${recipe.rating}" style="font-size: 60px; margin-right: 5px;"></i>
+                        <span style="font-size: 45px; font-weight: bold; color: red;"><i>[[${recipe.rating}]]</i></span>
+                    </span>
+                    <br /><br />
+                    <form method="post" role="form" th:action="@{/saveRecipe}">
+                        <input type="hidden" name="recipeId" th:value="${recipe.recipeId}" />
+                        <input type="submit" name="submit" value="Save Recipe" />
+                    </form>
+                </center>
+            </div>
+            <div class="column">
+                <center><h2>Ingredients</h2></center>
+                <ul style="font-size: 20; font-family: impact;">
+                    <li th:each="ingredient: ${ingredients}">
+                        <span th:text="${ingredient}"></span>
+                    </li>
+                </ul>
+                <center><h2>Information</h2></center>
+                <ul style="font-size: 20; font-family: impact;">
+                    <li>
+                        Calories: <span th:text="${recipe.calories}"></span>
+                    </li>
+                    <li>
+                        Number of Servings: <span th:text="${recipe.servings}"></span>
+                    </li>
+                    <li>
+                        Prep Time: <span th:text="${recipe.prepTime}"></span> Minutes
+                    </li>
+                    <li>
+                        Cook Time: <span th:text="${recipe.cookTime}"></span> Minutes
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <center><h2>Instructions</h2></center>
+                <ol style="font-size: 20; font-family: impact;">
+                    <li th:each="instruction: ${instructions}">
+                        <span th:text="${instruction}"></span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "7oRHN_hpWsZT77dqXMKDO",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src="https://www.chatbase.co/embed.min.js"
+            chatbotId="7oRHN_hpWsZT77dqXMKDO"
+            domain="www.chatbase.co"
+            defer>
+        </script>
+    </body>
+</html>

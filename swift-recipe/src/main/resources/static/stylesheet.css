@@ -1,0 +1,376 @@
+/*
+ * STYLESHEET.CSS
+ *
+ * @author Sade Jn Baptiste
+ * @author Lakshmi Kotikalapudi
+ * @author Andy Nguyen
+ * @author Shivani Samarla
+ * @author Emmanuel Taylor
+ *
+ * @description
+ *    Controls decoration of the front end spring application.
+ */
+
+body {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: sans-serif;
+    background-color: #FFFFDD;
+}
+
+input[type=submit], .linkbutton {
+    margin-left: 25px;
+    padding: 7px 11px 5px 10px;
+    border: none;
+    background-color: #009933;
+    color: white;
+    cursor: pointer;
+    width: 80%;
+    font-weight: bold;
+    font-size: 16;
+}
+
+input[type=submit]:hover, .linkbutton:hover {
+    background-color: #CC9900; 
+}
+
+h1 {
+    color: #003300;
+    font-family: impact;
+    font-size: 50;
+}
+
+h2 {
+    color: #003300;
+    font-family: impact;
+    font-size: 36px;
+    font-weight: 600;    
+}
+
+.wrapper {
+    min-width: 1500px;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.row {
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    grid-gap: 20px;
+    align-items: center;
+}
+
+.pagination button {
+    background-color: #004D1A;
+    border-color: #004D1A;
+    color: white;
+    padding: 8px 16px;
+    margin: 0 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20;
+}
+  
+.pagination button:hover {
+    background-color: #CC9900;
+    border-color: #CC9900;
+}
+
+.pagination button.selected {
+    background-color: #3366FF;
+    border-color: #3366FF;
+}
+
+.row .card {
+    width: 270px;
+    height: 400px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px gray;
+    background-color: white;
+}
+
+.row .card:hover, .container .column .image:hover {
+    transition: transform 0.15s ease-in-out;
+    transform: scale(1.05);
+}
+
+.row .card .image {
+    width: 270px;
+    height: 220px;
+    background-color: gray;
+}
+
+.row .card .productname {
+    float: left;
+    padding: 15px 10px 0 10px;
+    font-weight: bold;
+}
+
+.row .card .rating {
+    padding: 15px 5px 0 10px; 
+    font-size: 40;
+}
+
+.row .card .rating i:nth-child(-n+4) {
+    color: red;
+}
+
+.row .card .description {
+    display: flex;
+    padding: 0px 10px 25px 10px;
+    -webkit-line-clamp: 3;
+    max-height: 2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14;
+}
+
+.row .card button, .container .column input[type=submit], .container .column button {
+    margin-left: 25px;
+    padding: 7px 11px 5px 10px;
+    border: none;
+    background-color: #004D1A;
+    color: white;
+    cursor: pointer;
+    width: 80%;
+    font-weight: bold;
+    font-size: 16;
+}
+
+.container .column input[type=submit], .container .column button {
+    margin-left: 0px;
+    font-size: 24;
+}
+
+.container .column button {
+    background-color: #3366FF;
+}
+
+.row .card button:hover, .container .column input[type=submit]:hover, .container .column button:hover {
+    background-color: #CC9900
+}
+
+.top-bar {
+    background-color: #003300;
+    color: #FFF;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input[type="text"] {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    margin-right: 5px;
+    width: 300px;
+}
+
+.search-bar button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #3366FF;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-bar button:hover {
+    background-color: #CC9900;
+}
+
+.tabs a {
+    text-decoration: none;
+    color: #FFF;
+    padding: 10px;
+    margin-right: 10px;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom-color 0.3s;
+}
+
+.tabs a:hover {
+    background-color: #CC9900;
+}
+
+.tabs a.active {
+    border-bottom-color: #FFF;
+}
+
+.content {
+    padding: 20px;
+}
+
+.green-button, .blue-button, .red-button {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 40px;
+    font-family: impact;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 270;
+    height: 220;
+    box-shadow: 3px 3px 3px gray;
+}
+
+.green-button {
+    background-color: #003300;
+}
+
+.blue-button {
+    background-color: #000066;
+}
+
+.red-button {
+    background-color: #990000;
+}
+
+.green-button:hover, .blue-button:hover, .red-button:hover {
+    background-color: #CC9900;
+    transition: transform 0.15s ease-in-out;
+    transform: scale(1.05);
+}
+
+.second-wrapper {
+    min-width: 270px; 
+    height: 30vh; 
+    display: flex; 
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    position: absolute; /* Position absolute to center within column */
+    top: 50%; /* Move to the vertical center of the column */
+    left: 50%; /* Move to the horizontal center of the column */
+    transform: translate(-50%, -50%); /* Center the wrapper */
+}
+
+.container {
+    width: 75%;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px solid #CCC;
+    padding: 20px;
+    display: flex;
+    box-shadow: 3px 3px 3px gray;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
+}
+
+.column:first-child {
+    position: relative;
+}
+
+.column:nth-child(odd) {
+    background-color: #F0F0F0; 
+}
+
+.column:nth-child(even) {
+    background-color: #E0E0E0;
+}
+
+#chatbase-bubble-button {
+    background-color: #003300;
+}
+
+[data-star] {
+    text-align: left;
+    font-style: normal;
+    display: inline-block;
+    position: relative;
+    unicode-bidi: bidi-override;
+}
+
+[data-star]::before { 
+    display: block;
+    content: '★★★★★';
+    color: #eee;
+}
+
+[data-star]::after {
+    white-space: nowrap;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '★★★★★';
+    width: 0;
+    color: #FF8C00;
+    overflow: hidden;
+    height: 100%;
+}
+
+[data-star^="0.1"]::after { width: 2% }
+[data-star^="0.2"]::after { width: 4% }
+[data-star^="0.3"]::after { width: 6% }
+[data-star^="0.4"]::after { width: 8% }
+[data-star^="0.5"]::after { width: 10% }
+[data-star^="0.6"]::after { width: 12% }
+[data-star^="0.7"]::after { width: 14% }
+[data-star^="0.8"]::after { width: 16% }
+[data-star^="0.9"]::after { width: 18% }
+[data-star^="1"]::after { width: 20% }
+[data-star^="1.1"]::after { width: 22% }
+[data-star^="1.2"]::after { width: 24% }
+[data-star^="1.3"]::after { width: 26% }
+[data-star^="1.4"]::after { width: 28% }
+[data-star^="1.5"]::after { width: 30% }
+[data-star^="1.6"]::after { width: 32% }
+[data-star^="1.7"]::after { width: 34% }
+[data-star^="1.8"]::after { width: 36% }
+[data-star^="1.9"]::after { width: 38% }
+[data-star^="2"]::after{ width: 40% }
+[data-star^="2.1"]::after { width: 42% }
+[data-star^="2.2"]::after { width: 44% }
+[data-star^="2.3"]::after { width: 46% }
+[data-star^="2.4"]::after { width: 48% }
+[data-star^="2.5"]::after { width: 50% }
+[data-star^="2.6"]::after { width: 52% }
+[data-star^="2.7"]::after { width: 54% }
+[data-star^="2.8"]::after { width: 56% }
+[data-star^="2.9"]::after { width: 58% }
+[data-star^="3"]::after { width: 60% }
+[data-star^="3.1"]::after { width: 62% }
+[data-star^="3.2"]::after { width: 64% }
+[data-star^="3.3"]::after { width: 66% }
+[data-star^="3.4"]::after { width: 68% }
+[data-star^="3.5"]::after { width: 70% }
+[data-star^="3.6"]::after { width: 72% }
+[data-star^="3.7"]::after { width: 74% }
+[data-star^="3.8"]::after { width: 76% }
+[data-star^="3.9"]::after { width: 78% }
+[data-star^="4"]::after { width: 80% }
+[data-star^="4.1"]::after { width: 82% }
+[data-star^="4.2"]::after { width: 84% }
+[data-star^="4.3"]::after { width: 86% }
+[data-star^="4.4"]::after { width: 88% }
+[data-star^="4.5"]::after { width: 90% }
+[data-star^="4.6"]::after { width: 92% }
+[data-star^="4.7"]::after { width: 94% }
+[data-star^="4.8"]::after { width: 96% }
+[data-star^="4.9"]::after { width: 98% }
+[data-star^="5"]::after { width: 100% }

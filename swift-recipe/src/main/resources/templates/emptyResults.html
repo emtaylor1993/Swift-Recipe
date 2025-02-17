@@ -1,0 +1,58 @@
+<!--
+ * SWIFTRECIPE EMPTY RECIPE RESULTS VIEW
+ *
+ * @author Sade Jn Baptiste
+ * @author Lakshmi Kotikalapudi
+ * @author Andy Nguyen
+ * @author Shivani Samarla
+ * @author Emmanuel Taylor
+ *
+ * @description
+ *     View for Empty Results Screen
+-->
+
+<html>
+    <head>
+        <title>SwiftRecipe - Results</title>
+        <link th:href="@{/stylesheet.css}" rel="stylesheet" type="text/css">
+        <script th:src="@{/javascript.js}" async></script>
+    </head>
+    <body>
+        <div class="top-bar">
+            <div class="search-bar">
+                <input id="searchInput" type="text" placeholder="Search...">
+                <button id="searchButton" type="button" onclick="search()" disabled>Search</button>
+            </div>
+            <div class="tabs">
+                <a th:href="@{/}">Home</a>
+                <a th:href="@{/categories}">Categories</a>
+                <a th:href="@{/saved}">Saved</a>
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+        <br /><br />
+        <center>
+            <h1>Recipe Search Results for Query: <text th:text="${query}" style="color: #3366FF;"></text></h1>
+            <br /><br /><br /><br /><br /><br />
+            <h1 style="font-size: 40; color: #000000;">Unfortunately, your search query</h1>
+            <h1 style="font-size: 40; color: #000000;">found no results.</h1>
+            <br /><br /><br /><br /><br /><br />
+            <h2 style="font-size: 30; color: #000000; font-family: impact;">Tips for improving your results:</h3>
+            <h2 style="font-size: 25; color: #000000; font-family: impact;">1. Choose another category.</h4>
+            <h2 style="font-size: 25; color: #000000; font-family: impact;">2. Try a custom search using the top left search bar.</h4>
+            <h2 style="font-size: 25; color: #000000; font-family: impact;">3. Try using the AI-led chat assistant.</h4>
+        </center>
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "7oRHN_hpWsZT77dqXMKDO",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src="https://www.chatbase.co/embed.min.js"
+            chatbotId="7oRHN_hpWsZT77dqXMKDO"
+            domain="www.chatbase.co"
+            defer>
+        </script>
+    </body>
+</html>

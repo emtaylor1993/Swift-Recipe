@@ -1,0 +1,54 @@
+<!--
+ * SWIFTRECIPE EMPTY SAVED RECIPE VIEW
+ *
+ * @author Sade Jn Baptiste
+ * @author Lakshmi Kotikalapudi
+ * @author Andy Nguyen
+ * @author Shivani Samarla
+ * @author Emmanuel Taylor
+ *
+ * @description
+ *     View for Empty Saved Screen
+-->
+
+<html>
+    <head>
+        <title>SwiftRecipe - Saved</title>
+        <link th:href="@{/stylesheet.css}" rel="stylesheet" type="text/css">
+        <script th:src="@{/javascript.js}" async></script>
+    </head>
+    <body>
+        <div class="top-bar">
+            <div class="search-bar">
+                <input id="searchInput" type="text" placeholder="Search...">
+                <button id="searchButton" type="button" onclick="search()" disabled>Search</button>
+            </div>
+            <div class="tabs">
+                <a th:href="@{/}">Home</a>
+                <a th:href="@{/categories}">Categories</a>
+                <a th:href="@{/saved}" class="active">Saved</a>
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+        <br /><br />
+        <center>
+            <h1>Saved Recipes</h1>
+            <br /><br /><br /><br /><br /><br />
+            <h1 style="font-size: 40; color: #000000;">You have no saved Recipes</h1>
+            <h1 style="font-size: 40; color: #000000;">Try browsing some categories or creating a custom search.</h1>
+            <br /><br /><br /><br /><br /><br />
+        </center>
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "7oRHN_hpWsZT77dqXMKDO",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src="https://www.chatbase.co/embed.min.js"
+            chatbotId="7oRHN_hpWsZT77dqXMKDO"
+            domain="www.chatbase.co"
+            defer>
+        </script>
+    </body>
+</html>
