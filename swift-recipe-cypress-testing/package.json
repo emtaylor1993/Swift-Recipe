@@ -1,0 +1,23 @@
+{
+  "name": "swift-recipe-cypress-testing",
+  "version": "1.0.0",
+  "description": "Automation Cypress Tests for SwiftRecipe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emmanuel Taylor",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.13.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.2.0"
+  },
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^20.1.0",
+    "@cypress/browserify-preprocessor": "^3.0.2",
+    "cypress-on-fix": "^1.0.3",
+    "swift-recipe-cypress-testing": "file:"
+  }
+}

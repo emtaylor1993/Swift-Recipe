@@ -4,12 +4,12 @@
 # @author Emmanuel Taylor
 #
 # @description
-#   Provides a set of instructions to build a SpringBoot Docker
+#   Provides a set of instructions to build a Cypress Docker
 #   container.
 ###############################################################
 
 # Use the official Maven runtime with JDK 17 as a base image
-FROM maven:3.6.3-openjdk-17-slim
+FROM cypress/base
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -17,9 +17,5 @@ WORKDIR /app
 # Copy the project files
 COPY . .
 
-# Expose the port that the application listens on
-EXPOSE 8080
-
-## 5. Define the command to run when the container starts.
-RUN mvn install
-CMD [ "mvn", "spring-boot:run" ]
+# Define the command to run when the container starts.
+RUN npm install

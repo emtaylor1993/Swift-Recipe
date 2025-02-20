@@ -1,7 +1,25 @@
-version: '3'
+###############################################################
+# docker-compose.yml
+#
+# @author Emmanuel Taylor
+#
+# @description
+#   Creates the Docker network for Swift Recipe. As of now, it 
+#   creates and runs containers for both the main SpringBoot
+#   application and Cypress.
+###############################################################
+
 services:
   swift-recipe:
     image: swift-recipe
     container_name: swift-recipe
     ports:
       - "8080:8080"
+  cypress:
+    image: cypress
+    container_name: cypress
+    environment:
+      - CYPRESS_URL=http://swift-recipe:8080/login
+    depends_on:
+      - swift-recipe
+    entrypoint: ["/bin/sh", "-c", "while true; do sleep 30; done"] # Keep container alive.
