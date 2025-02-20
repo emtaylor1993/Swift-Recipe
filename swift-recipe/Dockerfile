@@ -22,4 +22,4 @@ EXPOSE 8080
 
 ## 5. Define the command to run when the container starts.
 RUN mvn install
-CMD [ "mvn", "spring-boot:run" ]
+CMD [ "mvn", "clean", "spring-boot:run" ]
