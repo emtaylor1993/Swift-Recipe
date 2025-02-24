@@ -15,6 +15,10 @@ services:
     container_name: swift-recipe
     ports:
       - "8080:8080"
+    environment:
+      - DESCRIPTION_FILE_PATH=classes/static/data/descriptions.txt
+      - INGREDIENTS_FILE_PATH=classes/static/data/ingredients.txt
+      - INSTRUCTIONS_FILE_PATH=classes/static/data/instructions.txt
   cypress:
     image: cypress
     container_name: cypress

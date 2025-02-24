@@ -44,7 +44,7 @@
                         <i th:text="${recipe.rating}" style="font-size: 24; font-weight: bold; float: right; padding: 18px 10px 0 10px;"></i>
                     </span>
                     <span class="description" th:text="${recipe.description}"></span>
-                    <button type="button" th:onclick="|window.location.href='/recipeinfo/?recipeId=${recipe.recipeId}'|">View Recipe</button>
+                    <button type="button" th:onclick="|window.location.href='/recipeInfo/?recipeId=${recipe.recipeId}'|">View Recipe</button>
                 </div>
             </div>
         </div>

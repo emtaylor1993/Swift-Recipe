@@ -17,9 +17,17 @@ WORKDIR /app
 # Copy the project files
 COPY . .
 
+# Install project dependencies.
+RUN mvn install
+
+# Package the application into a JAR file.
+RUN mvn clean package -DskipTests
+
 # Expose the port that the application listens on
 EXPOSE 8080
 
+# Change working directory to the JAR location.
+WORKDIR /app/target
+
 ## 5. Define the command to run when the container starts.
-RUN mvn install
-CMD [ "mvn", "clean", "spring-boot:run" ]
+CMD [ "java", "-jar", "swift-recipe-0.0.1-SNAPSHOT.jar" ]

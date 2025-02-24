@@ -140,7 +140,7 @@ public class WebController {
      * @throws ClassNotFoundException - Handles class not found exceptions
      * @throws IOException - Handles IO exceptions
      */
-    @GetMapping("/recipeinfo")
+    @GetMapping("/recipeInfo")
     public String getRecipe(Model model, @RequestParam(required = true) Long recipeId) throws ClassNotFoundException, IOException {
         Recipe recipe = recipeService.getRecipe(recipeId);
         String deserializedString = stringSerializer.deserializeString((byte[]) recipe.getInstructions());
@@ -149,7 +149,7 @@ public class WebController {
         model.addAttribute("recipe", recipe);
         model.addAttribute("instructions", instructions);
         model.addAttribute("ingredients", ingredients);
-        return "recipeinfo";
+        return "recipeInfo";
     }
 
     /**

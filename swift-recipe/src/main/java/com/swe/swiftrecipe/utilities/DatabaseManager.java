@@ -51,9 +51,21 @@ public class DatabaseManager {
 	private static final String PASSWORD = "";
 
 	// Data file paths
-	private static final String DESCRIPTION_FILE_PATH = "src/main/resources/static/data/descriptions.txt";
-	private static final String INGREDIENTS_FILE_PATH = "src/main/resources/static/data/ingredients.txt";
-	private static final String INSTRUCTIONS_FILE_PATH = "src/main/resources/static/data/instructions.txt";
+	private static final String DESCRIPTION_FILE_PATH = System.getenv("DESCRIPTION_FILE_PATH") != null
+		? System.getenv("DESCRIPTION_FILE_PATH") : "src/main/resources/data/descriptions.txt";
+	private static final String INGREDIENTS_FILE_PATH = System.getenv("INGREDIENTS_FILE_PATH") != null
+		? System.getenv("DESCRIPTION_FILE_PATH") : "src/main/resources/data/ingredients.txt";
+	private static final String INSTRUCTIONS_FILE_PATH = System.getenv("INSTRUCTIONS_FILE_PATH") != null
+		? System.getenv("DESCRIPTION_FILE_PATH") : "src/main/resources/data/instructions.txt";
+
+	// ATTENTION: If running locally using mvn package, comment the above out and uncomment these lines.
+	
+	// private static final String DESCRIPTION_FILE_PATH = System.getenv("DESCRIPTION_FILE_PATH") != null
+	// 	? System.getenv("DESCRIPTION_FILE_PATH") : "classes/static/data/descriptions.txt";
+	// private static final String INGREDIENTS_FILE_PATH = System.getenv("INGREDIENTS_FILE_PATH") != null
+	// 	? System.getenv("DESCRIPTION_FILE_PATH") : "classes/static/data/ingredients.txt";
+	// private static final String INSTRUCTIONS_FILE_PATH = System.getenv("INSTRUCTIONS_FILE_PATH") != null
+	// 	? System.getenv("DESCRIPTION_FILE_PATH") : "classes/static/data/instructions.txt";
 
 	// Number of recipes fetched from API
 	private static final Integer NUM_RECIPES = 50;
