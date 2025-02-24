@@ -40,3 +40,13 @@
 3. Navigate to the folder containing the newly generated jar file.
 4. Double click the jar file to run the application.
 5. Navigate to https://localhost:8080
+
+## Docker
+1. Open the project in Visual Studio Code.
+2. In the embedded terminal, navigate to the `swift-recipe` directory.
+3. Type in the following commmand: `docker build -t swift-recipe .`
+4. Navigate to the `swift-recipe-cypress-testing` directory.
+5. Type in the following command: `docker build -t cypress .`
+6. Navigate to the root of the project and type: `docker compose up`
+7. If you wish to run Cypress testing, open a separate terminal and type in `docker exec -it cypress /bin/sh`
+8. In the interactive container shell, type the following command: `npx cypress run`
