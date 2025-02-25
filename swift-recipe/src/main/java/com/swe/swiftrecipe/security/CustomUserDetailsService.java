@@ -1,10 +1,6 @@
 /**
  * SWIFTRECIPE CUSTOM USER DETAILS SERVICE CLASS
  * 
- * @author Sade Jn Baptiste
- * @author Lakshmi Kotikalapudi
- * @author Andy Nguyen
- * @author Shivani Samarla
  * @author Emmanuel Taylor
  * 
  * @description
