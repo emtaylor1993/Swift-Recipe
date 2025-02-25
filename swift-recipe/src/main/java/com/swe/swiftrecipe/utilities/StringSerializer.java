@@ -1,10 +1,6 @@
 /**
  * SWIFTRECIPE STRING SERIALIZER CLASS
  * 
- * @author Sade Jn Baptiste
- * @author Lakshmi Kotikalapudi
- * @author Andy Nguyen
- * @author Shivani Samarla
  * @author Emmanuel Taylor
  * 
  * @description
@@ -40,9 +36,9 @@ public class StringSerializer {
      */
     public byte[] serializeString(String string) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(string);
-        oos.close();
+        try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+            oos.writeObject(string);
+        }
         return bos.toByteArray();
     }
 
@@ -56,9 +52,10 @@ public class StringSerializer {
      */
     public String deserializeString(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-        ObjectInputStream ois = new ObjectInputStream(bis);
-        String string = (String) ois.readObject();
-        ois.close();
+        String string;
+        try (ObjectInputStream ois = new ObjectInputStream(bis)) {
+            string = (String) ois.readObject();
+        }
         return string;
     }
 }

@@ -1,10 +1,6 @@
 /**
  * SWIFTRECIPE SOLUTION APPLICATION ENTRY POINT
  * 
- * @author Sade Jn Baptiste
- * @author Lakshmi Kotikalapudi
- * @author Andy Nguyen
- * @author Shivani Samarla
  * @author Emmanuel Taylor
  * 
  * @description
@@ -23,16 +19,12 @@ package com.swe.swiftrecipe;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.swe.swiftrecipe.repository.UserRepository;
 import com.swe.swiftrecipe.utilities.DatabaseManager;
-import com.swe.swiftrecipe.utilities.PasswordHasher;
 import lombok.AllArgsConstructor;
 
 @SpringBootApplication
 @AllArgsConstructor
 public class SwiftRecipeApplication implements CommandLineRunner {
-	UserRepository userRepository;
-	PasswordHasher passwordHasher;
 	DatabaseManager databaseManager;
 
 	/**
@@ -52,7 +44,6 @@ public class SwiftRecipeApplication implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) throws Exception {
-		passwordHasher.hashPasswords();
 		databaseManager.initializeDataBase();
 	}
 }

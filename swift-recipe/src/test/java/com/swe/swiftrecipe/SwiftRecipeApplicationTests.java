@@ -1,10 +1,6 @@
 /**
  * SWIFTRECIPE APPLICATION TEST SUITE
  * 
- * @author Sade Jn Baptiste
- * @author Lakshmi Kotikalapudi
- * @author Andy Nguyen
- * @author Shivani Samarla
  * @author Emmanuel Taylor
  * 
  * @description
@@ -15,17 +11,15 @@
  *    Java IO (IOException)
  *    Jupiter API (Test)
  *    Jupiter API Extension (ExtendWith)
- *    Mockito (InjectMocks, Mock)
+ *    Mockito (InjectMocks)
  *    Mockito JUnit Jupiter (MockitoExtension)
  *    Spring Framework Beans Factory Annotation (Autowired)
  *    Spring Framework Boot Test Autoonfigure Web Servlet (AutoConfigureMockMvc)
  *    Spring Framework Boot Test Context (SpringBootTest)
- *    Spring Framework Security Crypto Password (PasswordEncoder)
  *    Spring Framework Security Test Context Support (WithMockUser)
  *    Spring Framework Test Web Servlet (MockMvc)
  *    Spring Framework Test Web Servlet Request (MockMvcRequestBuilders)
  *    Spring Framework Test Web Servlet Result (MockMvcResultMatchers)
- *    SwiftRecipe Service (UserService)
  *    SwiftRecipe Utilities (StringSerializer)
  */
 
@@ -37,17 +31,14 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import com.swe.swiftrecipe.service.UserService;
 import com.swe.swiftrecipe.utilities.StringSerializer;
 
 @SpringBootTest
@@ -58,14 +49,8 @@ class SwiftRecipeApplicationTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
-    private UserService userService;
-
     @InjectMocks
     private StringSerializer stringSerializer;
-
-    @Mock
-    private PasswordEncoder passwordEncoder;
 
     /**
      * Tests whether the application context loads successfully

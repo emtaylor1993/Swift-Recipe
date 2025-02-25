@@ -19,6 +19,9 @@ services:
       - DESCRIPTION_FILE_PATH=classes/static/data/descriptions.txt
       - INGREDIENTS_FILE_PATH=classes/static/data/ingredients.txt
       - INSTRUCTIONS_FILE_PATH=classes/static/data/instructions.txt
+    depends_on:
+      - mysql
+
   cypress:
     image: cypress
     container_name: cypress
@@ -27,3 +30,12 @@ services:
     depends_on:
       - swift-recipe
     entrypoint: ["/bin/sh", "-c", "while true; do sleep 30; done"] # Keep container alive.
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      - MYSQL_DATABASE=swift-recipe
+      - MYSQL_USER=swift-recipe-user
+      - MYSQL_PASSWORD=swift-recipe-password
+      - MYSQL_ROOT_PASSWORD=root-password

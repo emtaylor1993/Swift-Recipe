@@ -1,10 +1,6 @@
 /**
  * SWIFTRECIPE WEB CONTROLLER
  * 
- * @author Sade Jn Baptiste
- * @author Lakshmi Kotikalapudi
- * @author Andy Nguyen
- * @author Shivani Samarla
  * @author Emmanuel Taylor
  * 
  * @description
@@ -122,7 +118,7 @@ public class WebController {
         String username = principal.getName();
         User user = userService.getUserByUsername(username);
         List<Recipe> savedRecipes = new ArrayList<>(user.getRecipes());
-        if (savedRecipes.size() > 0) {
+        if (!savedRecipes.isEmpty()) {
             savedRecipes.sort(Comparator.comparing(Recipe::getRecipeName));
             model.addAttribute("savedRecipes", savedRecipes);
             return "saved";
@@ -265,7 +261,7 @@ public class WebController {
 
         model.addAttribute("query", queryAttribute);
 
-        if (results.size() > 0) {
+        if (!results.isEmpty()) {
             model.addAttribute("results", results);
             return "results";
         } else {
