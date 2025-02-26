@@ -17,9 +17,6 @@ WORKDIR /app
 # Copy the project files
 COPY . .
 
-# Install project dependencies.
-RUN mvn install
-
 # Package the application into a JAR file.
 RUN mvn clean package -DskipTests
 

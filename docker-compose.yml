@@ -16,11 +16,14 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - DB_HOST=mysql
+      - DB_PASSWORD=root-password
       - DESCRIPTION_FILE_PATH=classes/static/data/descriptions.txt
       - INGREDIENTS_FILE_PATH=classes/static/data/ingredients.txt
       - INSTRUCTIONS_FILE_PATH=classes/static/data/instructions.txt
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   cypress:
     image: cypress
@@ -39,3 +42,13 @@ services:
       - MYSQL_USER=swift-recipe-user
       - MYSQL_PASSWORD=swift-recipe-password
       - MYSQL_ROOT_PASSWORD=root-password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+volumes:
+  mysql_data:
