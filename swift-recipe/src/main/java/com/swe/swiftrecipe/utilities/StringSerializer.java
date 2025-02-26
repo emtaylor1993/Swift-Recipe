@@ -4,8 +4,9 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class contains functionality to serialize/deserialize strings
- *    for the recipe instructions.
+ *    This class provides functionality to serialize and deserialized string,
+ *    allowing recipe instructions to be stored and retrieved as byte arrays.
+ *    It leverages Java's built-in serialization mechanism.
  * 
  * @packages
  *    Java IO (ByteArrayInputStream, ByteArrayOutputStream, IOException, ObjectInputStream, ObjectOutputStream)
@@ -23,16 +24,23 @@ import java.io.ObjectOutputStream;
 import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 
+/**
+ * Lombok annotations to reduce Java boilerplate code for getters, setters, and
+ * constructors. Registers the class as an Service Bean to signify the presence
+ * of business logic.
+ */
 @AllArgsConstructor
 @Service
 public class StringSerializer {
 
     /**
-     * Serializes a String to an array of bytes
+     * This method converts a String into a binary format using Java's
+     * {@link OutputObjectStream} and {@link ByteArrayOutputStream}, allowining
+     * it to be stored or transmitted efficiently.
      * 
-     * @param string - String to be serialized
-     * @return byte[] - The serialized byte array
-     * @throws IOException - For IO exceptions
+     * @param string - The string to be serialized.
+     * @return byte[] - A byte array representing the serialized string.
+     * @throws IOException - Throws if an I/O error occurs during serialization.
      */
     public byte[] serializeString(String string) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -43,12 +51,14 @@ public class StringSerializer {
     }
 
     /**
-     * Deserializes the byte array to a String
+     * This method reads the binary data from a byte array and reconstructs
+     * the original string using Java's {@link ObjectInputStream}.
      * 
-     * @param bytes - Byte array to be deserialized
-     * @return String - The deserialized String
-     * @throws IOException - For IO exceptions
-     * @throws ClassNotFoundException - For class not found exceptions
+     * @param bytes - The byte array containing the serialized string data.
+     * @return String - The deserialized String.
+     * @throws IOException - Throws if an I/O error occurs during deserialization.
+     * @throws ClassNotFoundException - Throws if the class definition for the 
+     *      serialized object is not found.
      */
     public String deserializeString(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);

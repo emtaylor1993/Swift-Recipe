@@ -4,8 +4,11 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the Custom User Details Service and the feature to
- *    load the current logged in User.
+ *    This service class is responsible for loading user-specific data during authentication.
+ *    It implements Spring Security's {@link UserDetailsService} interface and retrieves
+ *    user details from MySQL via the {@link UserRepository}. This class is also tasked with
+ *    converting retrieved User entities into SecureUser objects, which makes them
+ *    compatible with Spring Security's authentication system.
  * 
  * @packages
  *    Spring Framework Security Core User Details (UserDetails, UserDetailsService, UsernameNotFoundException)
@@ -25,17 +28,22 @@ import com.swe.swiftrecipe.entity.SecurityUser;
 import com.swe.swiftrecipe.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
+/**
+ * Lombok annotations to reduce Java boilerplate code for getters, setters, and
+ * constructors. Registers the class as an Service Bean to signify the presence
+ * of business logic.
+ */
 @AllArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     UserRepository userRepository;
     
     /**
-     * Loads user details by username
+     * Loads user details by username during authentication.
      * 
-     * @param username - The username of the user
-     * @return UserDetails - An object containing the user details
-     * @throws UsernameNotFoundException - For username not found exceptions
+     * @param username - The username of the user to be authenticated.
+     * @return UserDetails - A {@link SecurityUser} object containing User authentication details.  
+     * @throws UsernameNotFoundException - Throws if the user with the given username is not found.
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

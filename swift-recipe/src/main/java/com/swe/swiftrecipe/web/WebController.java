@@ -4,8 +4,9 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the web controller for the front end of
- *    the application. It will handle requests to each page.
+ *    This class serves as the controller for handling web requests for the frontend.
+ *    It manages user authentication, recipe retrieval, saving functionality, and
+ *    User interactions.
  * 
  * @packages
  *    Java IO (IOException)
@@ -62,9 +63,9 @@ public class WebController {
     StringSerializer stringSerializer;
     
     /**
-     * Handles GET request for the login page
+     * Displays the login page.
      * 
-     * @return The login page view
+     * @return The login page view.
      */
     @GetMapping("/login")
     public String getLogin() {
@@ -72,11 +73,11 @@ public class WebController {
     }
 
     /**
-     * Handles GET request for the signup page
+     * Displays the signup page with optional user data.
      * 
-     * @param model - The model object
-     * @param userId - Optional user ID parameter
-     * @return The signup page view
+     * @param model - The model object to store attributes.
+     * @param userId - Optional user ID for editing existing User.
+     * @return The signup page view.
      */
     @GetMapping("/signup")
     public String getSignup(Model model, @RequestParam(required = false) Long userId) {
@@ -86,9 +87,10 @@ public class WebController {
     }
 
     /**
-     * Handles GET request for the dashboard page
-     * @param model - The model object
-     * @return The dashboard page view
+     * Displays the dashboard page with all available recipes.
+     * 
+     * @param model - The model object for storing recipes.
+     * @return The dashboard page view.
      */
     @GetMapping("/")
     public String getDashboard(Model model) {
@@ -97,9 +99,9 @@ public class WebController {
     }
 
     /**
-     * Handles GET request for the categories page
+     * Displays the categories page.
      * 
-     * @return The categories page view
+     * @return The categories page view.
      */
     @GetMapping("/categories")
     public String getCategories() {
@@ -107,11 +109,11 @@ public class WebController {
     }
 
     /**
-     * Handles GET request for the saved recipes page
-     * 
-     * @param model - The model object
-     * @param principal - The principal object representing the logged in user
-     * @return The saved recipes page view
+     * Displays the saved recipes page for a logged-in User.
+     *  
+     * @param model - The model object to store saved recipes.
+     * @param principal - The logged-in User's principal.
+     * @return The saved recipes page view or an empty page if no saved recipes.
      */
     @GetMapping("/saved")
     public String getSaved(Model model, Principal principal) {
@@ -128,13 +130,13 @@ public class WebController {
     }
 
     /**
-     * Handles GET request for the recipe information page
+     * Displays the recipeinfo page.
      * 
-     * @param model - The model object
-     * @param recipeId - The ID of the recipe to display
-     * @return The recipe information page view
-     * @throws ClassNotFoundException - Handles class not found exceptions
-     * @throws IOException - Handles IO exceptions
+     * @param model - The model object that stores the recipes information.
+     * @param recipeId - The ID of the recipe to display.
+     * @return The recipe information page view.
+     * @throws ClassNotFoundException - Handles class not found exceptions.
+     * @throws IOException - Handles IO exceptions.
      */
     @GetMapping("/recipeInfo")
     public String getRecipe(Model model, @RequestParam(required = true) Long recipeId) throws ClassNotFoundException, IOException {
@@ -149,17 +151,18 @@ public class WebController {
     }
 
     /**
-     * Handles GET request for the search results page
+     * Displays the results page.
      * 
-     * @param model - The model object
-     * @param query - The search query
-     * @return The search results page view
+     * @param model - The model object to store query results.
+     * @param query - The search query.
+     * @return The search results page view.
      */
     @GetMapping("/results")
+    @SuppressWarnings("ConvertToStringSwitch")
     public String getRecipeResults(Model model, @RequestParam(required = true) String query) {
         String formattedQuery = query.substring(0, 1).toUpperCase() + query.substring(1);
         String queryAttribute = formattedQuery;    
-        List<Recipe> results = new ArrayList<Recipe>();
+        List<Recipe> results = new ArrayList<>();
         List<Recipe> recipes = recipeService.getAllRecipes();
         for (int i = 0; i < recipes.size(); i++) {
             if (formattedQuery.equals("Easy") || formattedQuery.equals("Medium") || formattedQuery.equals("Hard")) {
@@ -270,11 +273,11 @@ public class WebController {
     }
 
     /**
-     * Handles POST requset to sign a user up
+     * Handles POST requset to sign a user up.
      * 
-     * @param user - The user object being signed up
-     * @param result - The binding result object
-     * @return The signup page view or redirect to login
+     * @param user - The user object being signed up.
+     * @param result - The binding result object.
+     * @return The signup page view or redirect to login.
      */
     @PostMapping("/signupUser")
     public String signupUser(@Valid User user, BindingResult result) {
@@ -290,11 +293,11 @@ public class WebController {
     }
 
     /**
-     * Handles POST request to save a recipe
+     * Handles POST request to save a recipe.
      * 
-     * @param recipeId - The ID of the recipe to save
-     * @param principal - The principal object representing the logged in user
-     * @return Redirect to saved recipes page
+     * @param recipeId - The ID of the recipe to save.
+     * @param principal - The principal object representing the logged in user.
+     * @return Redirect to saved recipes page.
      */
     @PostMapping("/saveRecipe")
     public String saveRecipe(@RequestParam("recipeId") Long recipeId, Principal principal) {
@@ -310,9 +313,9 @@ public class WebController {
     }
 
     /**
-     * Retrieves the index of the user in the list based on the user ID
+     * Retrieves the index of the user in the list based on the user ID.
      * 
-     * @param userId - The ID of the user
+     * @param userId - The ID of the user.
      * @return The index of the user in the list of -1000 if not found.
      */
     private int getUserIndex(Long userId) {

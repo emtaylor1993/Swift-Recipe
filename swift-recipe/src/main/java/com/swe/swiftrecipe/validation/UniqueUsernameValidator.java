@@ -4,8 +4,9 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the validation class that checks whether a
- *    username is unique.
+ *    This class represents the validation logic for the {@link UniqueUsername} constraint
+ *    annotation. It ensures that a username provided during User registration is unique
+ *    within the system.
  * 
  * @packages
  *    Java Extensions Validation (ConstraintValidator, ConstraintValidatorContext)
@@ -24,16 +25,21 @@ import com.swe.swiftrecipe.repository.UserRepository;
 
 @Component
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
+
+    /**
+     * Repository for accessing User data.
+     */
     private UserRepository userRepository;
 
-    // Default constructor
-    public UniqueUsernameValidator() {
+    /**
+     * Default constructor required by Spring.
+     */    public UniqueUsernameValidator() {
     }
 
     /**
-     * Constructor that uses the injected UserRepository
+     * Constructor for dependency injection of {@link UserRepository}.
      * 
-     * @param userRepository - The User Repository
+     * @param userRepository - The repository used to check existing emails.
      */
     @Autowired
     public UniqueUsernameValidator(UserRepository userRepository) {
@@ -41,11 +47,12 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
     }
 
     /**
-     * Validates the uniqueness of a username
+    /**
+     * Checks whether the provided username is unique within the database.
      * 
-     * @param username - The username to validate
-     * @param context - The validation context
-     * @return boolean - True if the username is unique, false otherwise
+     * @param email - The username to validate.
+     * @param context - The validation context providing additional metadata.
+     * @return boolean - Returns true if the username is unique, false otherwise.
      */
     @Override
     public boolean isValid(String username, ConstraintValidatorContext context) {

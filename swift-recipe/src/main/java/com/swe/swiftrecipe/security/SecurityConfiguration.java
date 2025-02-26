@@ -4,7 +4,9 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the Security Configuration class.
+ *    This class is responsible for configuring security settings for the SwiftRecipe
+ *    Web Application. It defines authentication and authorization rules, login/logout
+ *    settubgsm abd security filters.
  * 
  * @packages
  *    Spring Framework Beans Factory Annotation (Autowired)
@@ -25,24 +27,36 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Lombok annotations to register this class as a Configuration bean. This implies
+ * that this class contains one or more bean definitions. It also enables Spring's
+ * Web Security features. 
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
     
+    /**
+     * Injection of CustomUserDetailsService Service to handle user authentication.
+     */
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
     /**
-     * Configures the security settings for this web application
+     * Configures the security settings for this web application.
      * 
-     * @param http - HttpSecurity object to configure security settings
-     * @return SecurityFilterChain - Object representing the security filter chain
-     * @throws Exception - Handle exceptions that may occur during configuration
+     * @param http - HttpSecurity object to configure security settings.
+     * @return SecurityFilterChain - Object representing the security filter chain.
+     * @throws Exception - Handle exceptions that may occur during configuration.
      */
+    @SuppressWarnings("unused")
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+            // Disable CSRF protections for H2 Database Console access.
             .csrf(csrf -> csrf.ignoringAntMatchers("/h2/**").disable())
+
+            // Define authorization rules for different endpoints.
             .authorizeRequests(auth -> auth
                 .antMatchers("/h2/**").permitAll()
                 .antMatchers("/login?error=true").permitAll()
@@ -52,9 +66,17 @@ public class SecurityConfiguration {
                 .antMatchers("/resetPassword").permitAll()
                 .antMatchers("/images/*.png", "/*.js", "/*.css").permitAll()
                 .anyRequest().authenticated())
+
+            // Configure Login page.
             .formLogin(form -> form.loginPage("/login").permitAll())
+
+            // Sets the CustomUserDetailsService for authentication.
             .userDetailsService(customUserDetailsService)
+
+            // Configure security headers to allow H2 Console access.
             .headers(headers -> headers.frameOptions().sameOrigin())
+
+            // Configure Logout functionality.
             .logout(logout -> logout
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)

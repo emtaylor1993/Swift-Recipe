@@ -4,8 +4,9 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class contains functionality to support the initial load of
- *    data into the H2 console as well as results from the Dummy JSON API.
+ *    This class is responsible for managing MySQL operations related to
+ *    recipes. It initializes the database creation, loads data from an API,
+ *    and processes stored recipes.
  * 
  * @packages
  *    Java IO (BufferedReader, FileReader, IOException)
@@ -21,13 +22,13 @@
 package com.swe.swiftrecipe.utilities;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.sql.SQLException;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -35,43 +36,45 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.AllArgsConstructor;
 
+/**
+ * Lombok annotations to reduce Java boilerplate code for getters, setters, and
+ * constructors. Registers the class as an Service Bean to signify the presence
+ * of business logic.
+ */
 @AllArgsConstructor
 @Service
 public class DatabaseManager {
 	
+	/**
+	 * Injection of the JDBC Template for executing SQL queries.
+	 */
 	@Autowired
 	private final JdbcTemplate jdbcTemplate;
 
+	/**
+	 * Injection of the String Serializer for handling instruction storage.
+	 */
 	@Autowired
 	private final StringSerializer stringSerializer;
 
-	// Data file paths
-	private static final String DESCRIPTION_FILE_PATH = System.getenv("DESCRIPTION_FILE_PATH") != null
-		? System.getenv("DESCRIPTION_FILE_PATH") : "src/main/resources/static/data/descriptions.txt";
-	private static final String INGREDIENTS_FILE_PATH = System.getenv("INGREDIENTS_FILE_PATH") != null
-		? System.getenv("DESCRIPTION_FILE_PATH") : "src/main/resources/static/data/ingredients.txt";
-	private static final String INSTRUCTIONS_FILE_PATH = System.getenv("INSTRUCTIONS_FILE_PATH") != null
-		? System.getenv("DESCRIPTION_FILE_PATH") : "src/main/resources/static/data/instructions.txt";
+	/**
+	 * File paths for storing descriptions, ingredients, and instructions.
+	 */
+	private static final String DESCRIPTION_FILE_PATH = "static/data/descriptions.txt";
+	private static final String INGREDIENTS_FILE_PATH = "static/data/ingredients.txt";
+	private static final String INSTRUCTIONS_FILE_PATH = "static/data/instructions.txt";
 
-	// ATTENTION: If running locally using mvn package, comment the above out and uncomment these lines.
-	
-	// private static final String DESCRIPTION_FILE_PATH = System.getenv("DESCRIPTION_FILE_PATH") != null
-	// 	? System.getenv("DESCRIPTION_FILE_PATH") : "classes/static/data/descriptions.txt";
-	// private static final String INGREDIENTS_FILE_PATH = System.getenv("INGREDIENTS_FILE_PATH") != null
-	// 	? System.getenv("DESCRIPTION_FILE_PATH") : "classes/static/data/ingredients.txt";
-	// private static final String INSTRUCTIONS_FILE_PATH = System.getenv("INSTRUCTIONS_FILE_PATH") != null
-	// 	? System.getenv("DESCRIPTION_FILE_PATH") : "classes/static/data/instructions.txt";
-
-	// Number of recipes fetched from API
+	/**
+	 * Maximum number of recipes to be fetched from the API.
+	 */
 	private static final Integer NUM_RECIPES = 50;
 
 	/**
-	 * Initializes H2 database with information from API and data files
+	 * Initializes MySQL by creating the necessary tablse and populating
+	 * them with recipe data. Uses {@link Transactional} to ensure data integrity.
 	 */
 	@Transactional
 	public void initializeDataBase() {
@@ -80,9 +83,8 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * DDL to create recipe table in H2 database.
-	 * 
-	 * @throws SQLException - For SQL exceptions.
+	 * Creates the recipe table in MySQL if it does not already exist. Uses
+	 * the following DDL Schema.
 	 */
 	private void createRecipeTable() {
         String createTableSQL = """
@@ -109,18 +111,19 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * Fetches data from API and populates the recipe table with relevant information
+	 * Fetches recipe data from an external API and populates the database. This method
+	 * takes into account multiple ways to run the application. Filepaths should be 
+	 * handled both running locally or as a JAR file.
 	 * 
-	 * @throws SQLException - For SQL exceptions
-	 * @throws IOException - For IO exceptions
-	 * @throws InterruptedException - For interrupted exceptions
+	 * @throws IOException - Throws if an I/O error occurs during MySQL population.
+	 * @throws InterruptedException - Throws if an Interruption occurs during MySQL population.
 	 */
     @SuppressWarnings("CallToPrintStackTrace")
 	private void populateRecipes() {
         ObjectMapper mapper = new ObjectMapper();
-        try (BufferedReader descriptionsReader = new BufferedReader(new FileReader(DESCRIPTION_FILE_PATH));
-             BufferedReader ingredientsReader = new BufferedReader(new FileReader(INGREDIENTS_FILE_PATH));
-             BufferedReader instructionsReader = new BufferedReader(new FileReader(INSTRUCTIONS_FILE_PATH))) {
+        try (BufferedReader descriptionsReader = getFileReader(DESCRIPTION_FILE_PATH);
+             BufferedReader ingredientsReader = getFileReader(INGREDIENTS_FILE_PATH);
+             BufferedReader instructionsReader = getFileReader(INSTRUCTIONS_FILE_PATH)) {
 
             for (int recipeIndex = 1; recipeIndex <= NUM_RECIPES; recipeIndex++) {
                 HttpRequest request = HttpRequest.newBuilder()
@@ -128,7 +131,8 @@ public class DatabaseManager {
 					.GET()
 					.build();
                 HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-                Map<String, Object> map = mapper.readValue(response.body(), Map.class);
+                @SuppressWarnings("unchecked")
+				Map<String, Object> map = mapper.readValue(response.body(), Map.class);
                 insertRecipe(map, descriptionsReader.readLine(), ingredientsReader.readLine(), instructionsReader.readLine());
 				reformatLongNames(map);
 			}
@@ -138,14 +142,16 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * Inserts fetched recipe information into the H2 database
+	 * Inserts data for each fetched recipe into MySQL. Does not insert if the recipe
+	 * already exists inside of MySQL to prevent duplicates.
 	 * 
-	 * @param map - Map data structure containing recipe information
-	 * @param description - Recipe description
-	 * @param ingredients - Recipe ingredients
-	 * @param instructions - Recipe instructions
-	 * @throws SQLException - For SQL exceptions
-	 * @throws IOException - For IO exceptions
+	 * @param map - Map data structure containing recipe information.
+	 * @param description - String containing textual description of the recipe.
+	 * @param ingredients - String containing textual ingredients of the recipe.
+	 * @param instructions - String containing textual instructions of the recipe.
+	 * @throws IOException - Throws if an I/O error ocurs during insertion.
+	 * @throws NumberFormatException - Throws of a Number Format error occurs during insertion.
+	 * @throws DataAccessException - Throws if a Data Accesss error occurs during insertion.
 	 */
     @SuppressWarnings("CallToPrintStackTrace")
 	private void insertRecipe(Map<String, Object> map, String description, String ingredients, String instructions) {
@@ -158,7 +164,7 @@ public class DatabaseManager {
 		String recipeName = map.get("name").toString();
 		String finalName = nameUpdates.getOrDefault(recipeName, recipeName); // Use updated name if it exists
 	
-		// Check if the recipe already exists
+		// Check if the recipe already exists.
 		String checkRecipeExists = "SELECT recipe_id FROM recipe WHERE recipe_name = ?";
 		Integer existingId;
 
@@ -168,7 +174,7 @@ public class DatabaseManager {
 			existingId = null;
 		}
 	
-		if (existingId == null) { // Insert only if it doesn't exist
+		if (existingId == null) { // Insert only if it doesn't exist.
 			String sql = """
 				INSERT INTO recipe (recipe_name, description, ingredients, instructions, prep_time, cook_time, servings, difficulty, cuisine, calories, tags, image, rating, review_count, meal_type)
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -200,10 +206,9 @@ public class DatabaseManager {
     }
 
 	/**
-	 * Reformats long recipe names within the H2 database.
+	 * Reformats longer recipe names in MySQL for better readability.
 	 * 
-     * @param map - Map containing recipe information
-     * @throws SQLException - Handles SQL exceptions
+     * @param map - Map containing recipe information.
      */
     private void reformatLongNames(Map<String, Object> map) {
 		Map<String, String> nameUpdates = Map.of(
@@ -225,5 +230,20 @@ public class DatabaseManager {
 				jdbcTemplate.update(updateSQL, newName, oldName);
 			}
 		}
+    }
+
+	/**
+	 * Retrieves a BufferedReader for the given file path.
+	 * 
+	 * @param filePath - The path of the file.
+	 * @return BufferedReader for reading the file.
+	 * @throws IOException - Thrown if an I/O error occurs during the operation.
+	 */
+    private static BufferedReader getFileReader(String filePath) throws IOException {
+        InputStream inputStream = DatabaseManager.class.getClassLoader().getResourceAsStream(filePath);
+        if (inputStream == null) {
+            throw new IOException("File not found in classpath: " + filePath);
+        }
+        return new BufferedReader(new InputStreamReader(inputStream));
     }
 }

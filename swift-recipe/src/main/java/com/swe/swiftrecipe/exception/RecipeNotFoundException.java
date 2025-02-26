@@ -4,8 +4,10 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents a custom exception to be thrown if a Recipe ID
- *    cannot be found.
+ *    This class defines a custom exception to be thrown when a requested recipe
+ *    ID does not exist in the database. It extends {@link RuntimeException}, making 
+ *    it an unchecked exception that can be thrown without requiring explicit handling
+ *    in the method signature.
  * 
  * @packages
  *    None

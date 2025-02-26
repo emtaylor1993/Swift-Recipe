@@ -4,8 +4,10 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the repository to hold User objects
- *    that are loaded into the database.
+ *    This interface acts as the repository for managing User entities
+ *    within MySQL. It extends Spring Data JPA's {@link CrudRepository}, providing
+ *    CRUD (Create, Read, Update, Delete) operations without requiring the use of
+ *    explicit SQL queries.
  * 
  * @packages
  *    Java Utilities (Optional)
