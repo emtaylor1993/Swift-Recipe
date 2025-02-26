@@ -4,8 +4,10 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the interface to be implemented by the 
- *    custom UniqueEmailValidator class.
+ *    This class represents an annotation that is used to enforce a unique 
+ *    email constraint on User entities. It ensures that no two users can
+ *    register with the same email address. The actual validation logic
+ *    is implemented in the {@link UniqueEmailValidator} class.
  * 
  * @packages
  *    Java Extensions Validation (Constraint, Payload)
@@ -27,11 +29,20 @@ import java.lang.annotation.Target;
 public @interface UniqueEmail {
 
     /**
-     * Error message to print when validation fails.
-     * 
-     * @return String - The error message
+     * Defines the default error message to display when validation fails.
+     * This message is displayed if an email is already reigstered in the system.
      */
     String message() default "An account already exists with this email";
+
+    /**
+     * Defines groups that can be used to apply different validation constraints.
+     * Typically left empty unless grouping constraints are required.
+     */
     Class<?>[] groups() default {};
+
+    /**
+     * Used to associate additional metadata information for validation. Custom
+     * implementations may extend this payload for additional processing.
+     */
     Class<? extends Payload>[] payload() default {};
 }

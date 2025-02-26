@@ -4,7 +4,9 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the service implementation for Users.
+ *    This class provides the implementation of the {@link UserService} interface.
+ *    It handles business logic related to User management, including retrieving,
+ *    saving, and deleting Users in MySQL. * 
  * 
  * @packages
  *    Java Utilities (List, Optional)
@@ -27,17 +29,26 @@ import com.swe.swiftrecipe.exception.UserNotFoundException;
 import com.swe.swiftrecipe.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
+/**
+ * Lombok annotations to reduce Java boilerplate code for getters, setters, and
+ * constructors. Registers the class as an Service Bean to signify the presence
+ * of business logic.
+ */
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
+
+    /**
+     * Repository for accessing and managing User entities in MySQL.
+     */
     UserRepository userRepository;
 
     /**
-     * Retrieves a user based on the associated ID
+     * Saves a new User or updates an existing User in MySQL.
      * 
-     * @param id - The ID of the user
-     * @return User - The user associated with the given ID
-     * @throws UserNotFoundException - Handles exceptions where a user cannot be found
+     * @param id - The unique identifier for the User.
+     * @return User - The {@link User} associated with the given ID.
+     * @throws UserNotFoundException - Throws is no User is found with the given ID.
      */
     @Override
     public User getUser(Long id) {
@@ -46,10 +57,11 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Saves a user to the H2 database
+     * Saves a new user or updates an existing User in MySQL. Uses
+     * @Transactional to ensure data integrity during save operations.
      * 
-     * @param user - The user to save
-     * @return User - The saved user
+     * @param user - The User entity to be saved.
+     * @return User - The saved {@link User} entity.
      */
     @Override
     @Transactional
@@ -58,9 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Deletes a user by its ID
+     * Deletes a User from MySQL based on its ID.
      * 
-     * @param id - The ID of the user to delete
+     * @param id - The unique identifier of the User to delete.
      */
     @Override
     public void deleteUser(Long id) {
@@ -68,9 +80,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Retrieves all users
+     * Retrieves all Users stored in MySQL.
      * 
-     * @return List<User> - A list of all users
+     * @return List<User> - A list containing all registered Users.
      */
     @Override
     public List<User> getUsers() {
@@ -78,10 +90,10 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Retrieves a user by username
+     * Retrieves a user by username.
      * 
-     * @param username - The username of the user
-     * @return User - The user with the given username
+     * @param username - The username of the User.
+     * @return User - The User with the given username.
      */
     @Override
     public User getUserByUsername(String username) {
@@ -89,12 +101,13 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Unwraps an optional user entity
+     * Helper method to unwrap an Optional User entity. If the User exists, it 
+     * returns the User object. Otherwise, it throws a {@link UserNotFoundException}.
      * 
-     * @param entity - The optional user entity
-     * @param id - The ID of the entity
-     * @return User - The unwrapped user entity
-     * @throws UserNotFoundException - Handles exceptions when a user cannot be founc
+     * @param entity - The Optional containing a User entity.
+     * @param id - The unique ID of the User.
+     * @return User - The unwrapped {@link User} object.
+     * @throws UserNotFoundException - Throws if no User is found using the given ID.
      */
     static User unwrapUser(Optional<User> entity, Long id) {
         if (entity.isPresent()) return entity.get();

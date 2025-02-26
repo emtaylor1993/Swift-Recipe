@@ -4,8 +4,9 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the validation class that checks whether an
- *    email is unique.
+ *    This class represents the validation logic for the {@link UniqueEmail} constraint
+ *    annotation. It ensures that an email provided during User registration is unique
+ *    within the system.
  * 
  * @packages
  *    Java Extensions Validation (ConstraintValidator, ConstraintValidatorContext)
@@ -24,16 +25,22 @@ import com.swe.swiftrecipe.repository.UserRepository;
 
 @Component
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+
+    /**
+     * Repository for accessing User data.
+     */
     private UserRepository userRepository;
 
-    // Default constructor
+    /**
+     * Default constructor required by Spring.
+     */
     public UniqueEmailValidator() {
     }
 
     /**
-     * Constructor that uses the injected UserRepository
+     * Constructor for dependency injection of {@link UserRepository}.
      * 
-     * @param userRepository - The User Repository
+     * @param userRepository - The repository used to check existing emails.
      */
     @Autowired
     public UniqueEmailValidator(UserRepository userRepository) {
@@ -41,11 +48,11 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, St
     }
 
     /**
-     * Validates the uniqueness of an email
+     * Checks whether the provided email is unique within the database.
      * 
-     * @param email - The email address to validate
-     * @param context - The validation context
-     * @return boolean - True if the email is unique, false otherwise
+     * @param email - The email address to validate.
+     * @param context - The validation context providing additional metadata.
+     * @return boolean - Returns true if the email is unique, false otherwise.
      */
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {

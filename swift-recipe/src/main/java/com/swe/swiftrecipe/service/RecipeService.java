@@ -4,8 +4,11 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the service interface to be implemented
- *    by the Recipe service.
+ *    This interface defines the layer for managing Recipe entities.
+ *    It provides methods for retrieving, saving, deleting, and
+ *    listing recipes. The service interface allows for separation of business
+ *    logic from persistence logic, enesuring a clean architecture for
+ *    easy-to-test components.
  * 
  * @packages
  *    Java Utilities (List)

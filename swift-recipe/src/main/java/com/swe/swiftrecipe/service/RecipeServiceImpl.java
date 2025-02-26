@@ -4,7 +4,9 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the service implementation for Recipes.
+ *    This class provides the implementation of the {@link RecipeService} interface.
+ *    It handles business logic related to recipe management, including retrieving,
+ *    saving, and deleting recipes in MySQL.
  * 
  * @packages
  *    Java Utilities (List, Optional)
@@ -25,17 +27,26 @@ import com.swe.swiftrecipe.exception.RecipeNotFoundException;
 import com.swe.swiftrecipe.repository.RecipeRepository;
 import lombok.AllArgsConstructor;
 
+/**
+ * Lombok annotations to reduce Java boilerplate code for getters, setters, and
+ * constructors. Registers the class as an Service Bean to signify the presence
+ * of business logic.
+ */
 @AllArgsConstructor
 @Service
 public class RecipeServiceImpl implements RecipeService {
+
+    /**
+     * Repository for accessing and managing recipe entities in MySQL.
+     */
     RecipeRepository recipeRepository;
 
     /**
-     * Retrieves a recipe by ID
+     * Retrieves a recipe by its unique ID.
      * 
-     * @param id - The ID of the recipe
-     * @return Recipe - The recipe associated with the given ID
-     * @throws RecipeNotFoundExceptions - Handles if a recipe cannot be found
+     * @param id - The unique identifier of the recipe.
+     * @return Recipe - The {@link Recipe} object corresponding to the given ID.
+     * @throws RecipeNotFoundExceptions - Throws if no recipe is found with the given ID.
      */
     @Override
     public Recipe getRecipe(Long id) {
@@ -44,10 +55,10 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     /**
-     * Saves a recipe to the H2 database
+     * Saves a new recipe or updates an existing one in MySQL.
      * 
-     * @param recipe - The recipe to be saved
-     * @return Recipe - The saved recipe
+     * @param recipe - The {@link Recipe} object to be saved.
+     * @return Recipe - The saved recipe object with generated identifiers.
      */
     @Override
     public Recipe saveRecipe(Recipe recipe) {
@@ -55,9 +66,9 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     /**
-     * Deletes a recipe based on the associated ID
+     * Deletes a recipe from MySQL based on its ID.
      * 
-     * @param id - The ID of the recipe to be deleted
+     * @param id - The unique identifier of the {@link Recipe} to be deleted.
      */
     @Override
     public void deleteRecipe(Long id) {
@@ -65,9 +76,9 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     /**
-     * Retrieves all recipes
+     * Retrieves all recipes that are stored within MySQL.
      * 
-     * @return List<Recipe> - A list of all the recipes
+     * @return List<Recipe> - A list of all available recipes.
      */
     @Override
     public List<Recipe> getAllRecipes() {
@@ -75,12 +86,13 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     /**
-     * Unwrap an Optional Recipe entity
+     * Helper method to unwrap an Optional Recipe entity. If the recipe exists, it 
+     * returns the Recipe object. Otherwise, it throws a {@link RecipeNotFoundException}.
      * 
-     * @param entity - The optional recipe entity
-     * @param id - The ID of the recipe to be unwrapped
-     * @return Recipe - The unwrapped recipe entity
-     * @throws RecipeNotFoundException - Handles if a recipe cannot be found
+     * @param entity - The Optional containing a Recipe entity.
+     * @param id - The unique ID of the recipe.
+     * @return Recipe - The unwrapped {@link Recipe} object.
+     * @throws RecipeNotFoundException - Throws if no recipe is found using the given ID.
      */
     static Recipe unwrapRecipe(Optional<Recipe> entity, Long id) {
         if (entity.isPresent()) return entity.get();

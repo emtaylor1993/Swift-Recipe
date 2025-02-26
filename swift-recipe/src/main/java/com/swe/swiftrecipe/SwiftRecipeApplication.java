@@ -4,7 +4,8 @@
  * @author Emmanuel Taylor
  * 
  * @description
- *    This class represents the entry point of SwiftRecipe
+ *    This class serves as the main entry point for the SwiftRecipe application.
+ *    It initializes the Spring Boot framework and sets up the required components.
  * 
  * @packages
  *    Spring Framework Boot (CommandLineRunner, SpringApplication)
@@ -25,22 +26,29 @@ import lombok.AllArgsConstructor;
 @SpringBootApplication
 @AllArgsConstructor
 public class SwiftRecipeApplication implements CommandLineRunner {
+	
+	/**
+	 * Injection of DatabaseManager component.
+	 */
 	DatabaseManager databaseManager;
 
 	/**
-	 * The entry point of t he spring boot application
+	 * The main method serves as the entry point for the Spring Boot application.
+	 * It delegates to {@link SpringApplication#run(Class, String...)} to boostrap the
+	 * application.
 	 * 
-	 * @param args - Command line arguments
+	 * @param args - Command line arguments passed when running the application.
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(SwiftRecipeApplication.class, args);
 	}
 
 	/**
-	 * Method call after application context is loaded. Hashes passwords and initializes database
+	 * This method is executed after the application context is fully loaded. It 
+	 * initializes the database and ensures the required data is preloaded.
 	 * 
-	 * @param args - CLI arguments
-	 * @throws Exception - Handles errors that may occur during initialization
+	 * @param args - Command line arguments passed when running the application.
+	 * @throws Exception - Handles errors that may occur during initialization.
 	 */
 	@Override
 	public void run(String... args) throws Exception {
